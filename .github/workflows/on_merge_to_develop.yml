@@ -1,9 +1,7 @@
 name: Merge To Develop
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
   contents: read
@@ -13,10 +11,8 @@ permissions:
   issues: write
 
 jobs:
-  validate-branch:
+  validate-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Check branch
-        run: |
-          echo "ERROR: You cannot open a PR to main from a feature branch."
-          exit 1
+      - name: do something
+        run: sleep 30
