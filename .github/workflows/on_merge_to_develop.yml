@@ -3,7 +3,7 @@ name: Merge To Develop
 on:
   push:
     branches:
-      - wip-develop
+      - main
 
 env:
   SNOWSQL_PWD: ${{ secrets.SNOWFLAKE_PASSWORD }}
