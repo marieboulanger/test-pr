@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check branch
-        if: startsWith(github.head_ref, 'first-')
         run: |
           echo "ERROR: You cannot open a PR to main from a feature branch."
           exit 1
