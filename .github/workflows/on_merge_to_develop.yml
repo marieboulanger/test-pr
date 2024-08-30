@@ -1,0 +1,30 @@
+name: Merge To Develop
+
+on:
+  push:
+    branches:
+      - wip-develop
+
+env:
+  SNOWSQL_PWD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+  SNOWSQL_USR: ${{ secrets.SNOWFLAKE_USER }}
+  SNOWSQL_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+  CONNECT_TO_PROD_SALESFORCE: false
+  SNOWFLAKE_ACCOUNT: ${{ vars.SNOWFLAKE_ACCOUNT }}
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+  id-token: write
+  issues: write
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        if: not startsWith(github.head_ref, 'feature/')
+        run: |
+          echo "ERROR: You cannot open a PR to main from a feature branch."
+          exit 1
