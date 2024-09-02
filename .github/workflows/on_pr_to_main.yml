@@ -17,7 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: do something
-        run: sleep 10
+        run: sleep 5
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
 
       - name: Trigger deploy AWS
         run: |
