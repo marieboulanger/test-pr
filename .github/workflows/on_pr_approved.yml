@@ -39,8 +39,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: IF FAIL - re-trigger with develop
-        if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow run deploy_aws_branch.yml --ref main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: IF FAIL - re-trigger with develop
+#        if: steps.filter.outputs.tf_related == 'true'
+#        run: gh workflow run deploy_aws_branch.yml --ref main
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
