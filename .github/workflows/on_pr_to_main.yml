@@ -17,4 +17,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: do something
-        run: sleep 30
+        run: echo $GITHUB_HEAD_REF
