@@ -41,8 +41,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Only run if previous step failed
       - name: Trigger deploy AWS with develop
-        if: steps.filter.outputs.tf_related == 'true'
+        if: steps.filter.outputs.tf_related == 'true' && steps.trigger-TF-from-feature-branch.outcome == 'failure'
         run: gh workflow run deploy_aws_branch.yml --ref main --raw-field run-DBT-Docker-Step-flag=true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
