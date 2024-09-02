@@ -40,7 +40,7 @@ jobs:
 
       - name: Trigger deploy AWS
         if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow run deploy_branch_aws.yml --ref ${{ steps.extract_branch.outputs.branch }}
+        run: gh workflow list
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
