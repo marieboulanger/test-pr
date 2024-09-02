@@ -35,7 +35,9 @@ jobs:
 
       - name: Trigger deploy AWS
         if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow run deploy_aws_branch.yml --ref ${{ github.event.pull_request.base.ref }} --raw-field run-DBT-Docker-Step-flag=false
+        run: |
+          echo '{"run-DBT-Docker-Step-flag":"false"}' 
+          gh workflow run deploy_aws_branch.yml --ref ${{ github.event.pull_request.base.ref }} --json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
