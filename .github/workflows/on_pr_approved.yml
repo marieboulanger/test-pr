@@ -37,7 +37,7 @@ jobs:
         id: trigger-TF-from-feature-branch
         if: steps.filter.outputs.tf_related == 'true'
         continue-on-error: true
-        run: gh workflow run deploy_aws_branch.yml --ref ${{ github.event.pull_request.base.ref }} --raw-field run-DBT-Docker-Step-flag=true
+        run: gh workflow run deploy_aws_branch.yml --ref ${{ github.event.pull_request.head.ref }} --raw-field run-DBT-Docker-Step-flag=true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
