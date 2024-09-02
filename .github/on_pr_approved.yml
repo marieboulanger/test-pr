@@ -1,0 +1,51 @@
+name: PR review approved
+
+on:
+  pull_request_review:
+    types: [ submitted ]
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+  id-token: write
+  issues: write
+
+jobs:
+  run_deploy_TF_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 5
+
+      - name: Gather modified files
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          list-files: json
+          filters: |
+              tf_related:
+                - 'aws/terraform/**'
+                - 'dbt/dbt_snowflake_dwh/Dockerfile'
+                - 'dbt/dbt_snowflake_dwh/poetry.lock'
+                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
+
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+
+#      - name: Trigger deploy AWS
+#        if: steps.filter.outputs.tf_related == 'true'
+#        run: gh workflow run deploy_branch_aws.yml --ref ${{ steps.extract_branch.outputs.branch }}
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: IF FAIL - re-trigger with develop
+#        if: steps.filter.outputs.tf_related == 'true'
+#        run: gh workflow run deploy_branch_aws.yml --ref main
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

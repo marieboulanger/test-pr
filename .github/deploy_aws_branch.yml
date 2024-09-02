@@ -1,0 +1,29 @@
+name: PR review approved
+
+on:
+  workflow_dispatch:
+    inputs:
+      run-DBT-Docker-Step-flag:
+        type: boolean
+        description: Run DBT Docker step?
+        required: false
+        default: false
+      invoke_lambda_during_deployment:
+        type: boolean
+        description: Invoke Lambda Function(s) during deployment?
+        required: false
+        default: false
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+  id-token: write
+  issues: write
+
+jobs:
+  validate-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: do something
+        run: sleep 30

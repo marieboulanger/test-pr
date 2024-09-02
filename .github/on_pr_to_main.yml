@@ -1,0 +1,20 @@
+name: on PR to main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: read
+  actions: read
+  id-token: write
+  issues: write
+
+jobs:
+  validate-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: do something
+        run: sleep 30
