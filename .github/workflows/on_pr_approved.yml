@@ -32,9 +32,15 @@ jobs:
                 - 'dbt/dbt_snowflake_dwh/poetry.lock'
                 - 'dbt/dbt_snowflake_dwh/pyproject.toml'
 
+      - name: Extract branch name
+        id: extract_branch
+        run: |
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+
       - name: Trigger deploy AWS
         if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow run deploy_branch_aws.yml --ref ${{ github.head_ref }}
+        run: gh workflow run deploy_branch_aws.yml --ref ${{ steps.extract_branch.outputs.branch }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
