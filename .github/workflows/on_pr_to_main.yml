@@ -17,4 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: do something
-        run: sleep 30
+        run: sleep 10
+
+      - name: Trigger deploy AWS
+        run: |
+          gh workflow run deploy_aws_branch.yml --ref first-branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
