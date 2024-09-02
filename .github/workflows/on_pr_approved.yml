@@ -38,14 +38,14 @@ jobs:
           echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
 
-      - name: Trigger deploy AWS
-        if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow list
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: IF FAIL - re-trigger with develop
-        if: steps.filter.outputs.tf_related == 'true'
-        run: gh workflow run deploy_branch_aws.yml --ref main
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Trigger deploy AWS
+#        if: steps.filter.outputs.tf_related == 'true'
+#        run: gh workflow run deploy_branch_aws.yml --ref ${{ steps.extract_branch.outputs.branch }}
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: IF FAIL - re-trigger with develop
+#        if: steps.filter.outputs.tf_related == 'true'
+#        run: gh workflow run deploy_branch_aws.yml --ref main
+#        env:
+#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
