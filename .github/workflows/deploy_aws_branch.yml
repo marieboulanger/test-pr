@@ -26,4 +26,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: do something
+        if: ${{ inputs.run-DBT-Docker-Step-flag }}
         run: sleep 30
