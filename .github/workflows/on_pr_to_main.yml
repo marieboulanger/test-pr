@@ -1,4 +1,4 @@
-name: PR review approved
+name: on PR to main
 
 on:
   pull_request:
