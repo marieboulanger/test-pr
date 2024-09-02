@@ -1,9 +1,8 @@
 name: PR review approved
 
 on:
-  push:
-    branches:
-      - main
+  pull_request_review:
+    types: [ submitted ]
 
 permissions:
   contents: read
