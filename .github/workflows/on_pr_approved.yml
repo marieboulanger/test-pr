@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tf_related: ${{ steps.filter.outputs.tf_related }}
-    permissions: write-all
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -47,9 +46,10 @@ jobs:
 
   # Only run if previous step failed
   deploy-tf-dev-from-develop:
-    if: ${{ needs.check_condition.outputs.tf_related == 'true' }} && ${{ failure() }}
+    if: ${{ needs.check_condition.outputs.tf_related == 'true' && failure() }}
     needs: check_condition
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
