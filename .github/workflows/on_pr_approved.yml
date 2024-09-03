@@ -35,8 +35,11 @@ jobs:
 
       - name: Trigger deploy AWS with the feature branch
         id: trigger-TF-from-feature-branch
+
         if: steps.filter.outputs.tf_related == 'true'
-        uses: ./.github/workflows/deploy_resources.yml
+        uses: |
+          actions/checkout@v4
+          ./.github/workflows/deploy_resources.yml
 
       # Only run if previous step failed
       - name: Trigger deploy AWS with develop
