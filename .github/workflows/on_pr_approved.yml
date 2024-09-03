@@ -17,7 +17,7 @@ jobs:
     permissions: write-all
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 5
 
@@ -44,6 +44,6 @@ jobs:
       # Only run if previous step failed
       - name: Trigger deploy AWS with develop
         if: steps.filter.outputs.tf_related == 'true' && steps.trigger-TF-from-feature-branch.outcome == 'failure'
-        run: gh workflow run deploy_aws_branch.yml --ref main --raw-field run-DBT-Docker-Step-flag=true
+        run: gh workflow run deploy_aws_branch.yml --ref develop --raw-field run-DBT-Docker-Step-flag=true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
