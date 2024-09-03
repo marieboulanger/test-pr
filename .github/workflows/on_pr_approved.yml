@@ -12,7 +12,7 @@ permissions:
   issues: write
 
 jobs:
-  run_deploy_TF_dev:
+  check_condition:
     if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     outputs:
