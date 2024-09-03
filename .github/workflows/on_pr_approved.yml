@@ -36,12 +36,11 @@ jobs:
       - name: Trigger deploy AWS with the feature branch
         id: trigger-TF-from-feature-branch
         if: steps.filter.outputs.tf_related == 'true'
-        continue-on-error: true
         uses: ./.github/workflows/deploy_resources.yml
 
       # Only run if previous step failed
       - name: Trigger deploy AWS with develop
-        if: steps.filter.outputs.tf_related == 'true' && steps.trigger-TF-from-feature-branch.outcome == 'failure'
+        if: steps.filter.outputs.tf_related == 'true' && ${{ success() || failure() }}
         run: gh workflow run deploy_aws_branch.yml --ref develop --raw-field run-DBT-Docker-Step-flag=true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

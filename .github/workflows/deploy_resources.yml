@@ -14,5 +14,10 @@ jobs:
   validate-pr:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 5
+
       - name: do something
         run: exit 1
