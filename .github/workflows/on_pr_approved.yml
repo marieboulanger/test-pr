@@ -31,10 +31,11 @@ jobs:
           list-files: json
           filters: |
               tf_related:
-                - 'aws/terraform/**'
-                - 'dbt/dbt_snowflake_dwh/Dockerfile'
-                - 'dbt/dbt_snowflake_dwh/poetry.lock'
-                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
+                - 'dbt/dbt_snowflake_dwh/models/**'
+#                - 'aws/terraform/**'
+#                - 'dbt/dbt_snowflake_dwh/Dockerfile'
+#                - 'dbt/dbt_snowflake_dwh/poetry.lock'
+#                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
 
   deploy-tf-dev:
     runs-on: ubuntu-latest
@@ -50,6 +51,8 @@ jobs:
     needs: check_condition
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
       - name: do stuff
         run: gh workflow run deploy_aws_branch.yml --ref develop --raw-field run-DBT-Docker-Step-flag=true
         env:
