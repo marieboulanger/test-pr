@@ -27,4 +27,4 @@ jobs:
     steps:
       - name: do something
         if: ${{ inputs.run-DBT-Docker-Step-flag }}
-        run: sleep 30
+        run: exit 1
