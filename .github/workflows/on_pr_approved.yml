@@ -30,10 +30,11 @@ jobs:
           list-files: json
           filters: |
               tf_related:
-                - 'aws/terraform/**'
-                - 'dbt/dbt_snowflake_dwh/Dockerfile'
-                - 'dbt/dbt_snowflake_dwh/poetry.lock'
-                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
+                - 'dbt/dbt_snowflake_dwh/models/**'
+#                - 'aws/terraform/**'
+#                - 'dbt/dbt_snowflake_dwh/Dockerfile'
+#                - 'dbt/dbt_snowflake_dwh/poetry.lock'
+#                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
 
   deploy-tf-dev:
     runs-on: ubuntu-latest
@@ -41,7 +42,7 @@ jobs:
     if: ${{ needs.check_condition.outputs.tf_related == 'true' }}
     steps:
       - name: Do something
-        run: sleep 60
+        run: sleep 10
 
   # Only run if previous step failed
   deploy-tf-dev-from-develop:
