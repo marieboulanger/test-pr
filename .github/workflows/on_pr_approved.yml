@@ -3,6 +3,8 @@ name: PR review approved
 on:
   pull_request_review:
     types: [ submitted ]
+    branches:
+      - main
 
 permissions:
   contents: read
