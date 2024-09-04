@@ -53,6 +53,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: do stuff
-        run: gh workflow run deploy_aws_branch.yml --ref develop --raw-field run-DBT-Docker-Step-flag=true
+        run: gh workflow run deploy_aws_branch.yml --ref main --raw-field run-DBT-Docker-Step-flag=true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
