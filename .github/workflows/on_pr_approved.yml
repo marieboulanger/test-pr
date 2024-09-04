@@ -41,7 +41,7 @@ jobs:
     if: ${{ needs.check_condition.outputs.tf_related == 'true' }}
     steps:
       - name: Do something
-        run: sleep 10
+        run: exit 1
 
   # Only run if previous step failed
   deploy-tf-dev-from-develop:
