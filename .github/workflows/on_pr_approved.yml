@@ -30,11 +30,10 @@ jobs:
           list-files: json
           filters: |
               tf_related:
-                - 'dbt/dbt_snowflake_dwh/models/**'
-#                - 'aws/terraform/**'
-#                - 'dbt/dbt_snowflake_dwh/Dockerfile'
-#                - 'dbt/dbt_snowflake_dwh/poetry.lock'
-#                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
+                - 'aws/terraform/**'
+                - 'dbt/dbt_snowflake_dwh/Dockerfile'
+                - 'dbt/dbt_snowflake_dwh/poetry.lock'
+                - 'dbt/dbt_snowflake_dwh/pyproject.toml'
 
   deploy-tf-dev:
     runs-on: ubuntu-latest
