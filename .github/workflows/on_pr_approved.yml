@@ -40,13 +40,13 @@ jobs:
     needs: check_condition
     if: ${{ needs.check_condition.outputs.tf_related == 'true' }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Do something
+        uses: sleep 60
 
   # Only run if previous step failed
   deploy-tf-dev-from-develop:
     if: ${{ needs.check_condition.outputs.tf_related == 'true' && failure() }}
-    needs: check_condition
+    needs: [check_condition, deploy-tf-dev]
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
