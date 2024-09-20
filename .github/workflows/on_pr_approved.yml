@@ -43,7 +43,7 @@ jobs:
       - name: Do something
         run: exit 1
 
-  # Only run if previous step failed - always exit 1 to show the fail in the PR as failed
+  # Only run if previous step failed  always exit 1 to show the fail in the PR as failed
   deploy-tf-dev-from-develop:
     if: ${{ needs.check_condition.outputs.tf_related == 'true' && failure() }}
     needs: [check_condition, deploy-tf-dev]
