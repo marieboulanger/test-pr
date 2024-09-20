@@ -3,8 +3,6 @@ name: PR review approved
 on:
   pull_request_review:
     types: [ submitted ]
-    branches:
-      - main
 
 permissions:
   contents: read
@@ -15,7 +13,7 @@ permissions:
 
 jobs:
   check_condition:
-    if: github.event.review.state == 'approved'
+    if: ${{ github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main' }}
     runs-on: ubuntu-latest
     outputs:
       tf_related: ${{ steps.filter.outputs.tf_related }}
