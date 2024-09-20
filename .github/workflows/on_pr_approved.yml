@@ -12,11 +12,14 @@ permissions:
   issues: write
 
 jobs:
-  run_deploy_TF_dev:
+  check_condition:
+    if: ${{ github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main' }}
     runs-on: ubuntu-latest
+    outputs:
+      tf_related: ${{ steps.filter.outputs.tf_related }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 5
 
@@ -32,20 +35,27 @@ jobs:
                 - 'dbt/dbt_snowflake_dwh/poetry.lock'
                 - 'dbt/dbt_snowflake_dwh/pyproject.toml'
 
-      - name: Extract branch name
-        id: extract_branch
-        run: |
-          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+  deploy-tf-dev:
+    runs-on: ubuntu-latest
+    needs: check_condition
+    if: ${{ needs.check_condition.outputs.tf_related == 'true' }}
+    steps:
+      - name: Do something
+        run: exit 1
 
-#      - name: Trigger deploy AWS
-#        if: steps.filter.outputs.tf_related == 'true'
-#        run: gh workflow run deploy_branch_aws.yml --ref ${{ steps.extract_branch.outputs.branch }}
-#        env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: IF FAIL - re-trigger with develop
-#        if: steps.filter.outputs.tf_related == 'true'
-#        run: gh workflow run deploy_branch_aws.yml --ref main
-#        env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # Only run if previous step edalways exit 1 to show the fail in the PR as failed
+  deploy-tf-dev-from-develop:
+    if: ${{ needs.check_condition.outputs.tf_related == 'true' && failure() }}
+    needs: [check_condition, deploy-tf-dev]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: do stuff
+        run: |
+          gh workflow run deploy_aws_branch.yml --ref main --raw-field run-DBT-Docker-Step-flag=true
+          echo "***** TF deployed to DEV successfully from develop *****"
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

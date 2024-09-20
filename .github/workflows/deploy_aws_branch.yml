@@ -1,4 +1,4 @@
-name: PR review approved.
+name: PR review approved
 
 on:
   workflow_dispatch:
@@ -26,4 +26,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: do something
-        run: sleep 30
+        if: ${{ inputs.run-DBT-Docker-Step-flag }}
+        run: exit 1
