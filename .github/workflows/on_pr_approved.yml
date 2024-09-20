@@ -3,8 +3,6 @@ name: PR review approved
 on:
   pull_request_review:
     types: [ submitted ]
-    branches:
-      - main
 
 permissions:
   contents: read
@@ -15,7 +13,7 @@ permissions:
 
 jobs:
   check_condition:
-    if: github.event.review.state == 'approved'
+    if: ${{ github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main' }}
     runs-on: ubuntu-latest
     outputs:
       tf_related: ${{ steps.filter.outputs.tf_related }}
@@ -45,7 +43,7 @@ jobs:
       - name: Do something
         run: exit 1
 
-  # Only run if previous step failed - always exit 1 to show the fail in the PR as failed
+  # Only run if previous step faile always exit 1 to show the fail in the PR as failed
   deploy-tf-dev-from-develop:
     if: ${{ needs.check_condition.outputs.tf_related == 'true' && failure() }}
     needs: [check_condition, deploy-tf-dev]
