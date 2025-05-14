@@ -1,18 +1,7 @@
-name: PR review approved.
+name: PR creation
 
 on:
   workflow_dispatch:
-    inputs:
-      run-DBT-Docker-Step-flag:
-        type: boolean
-        description: Run DBT Docker step?
-        required: false
-        default: false
-      invoke_lambda_during_deployment:
-        type: boolean
-        description: Invoke Lambda Function(s) during deployment?
-        required: false
-        default: false
 
 permissions:
   contents: read
