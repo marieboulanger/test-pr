@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write #needed
   packages: read
   actions: read
   id-token: write
   issues: write
-  pull-requests: write
+  pull-requests: write #needed
 
 jobs:
   create-pr:
