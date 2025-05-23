@@ -34,7 +34,8 @@ jobs:
 
       - name: create pull request
         run: |
-            gh pr create --fill -B main -H feature-branch-pr-creation \
+            git fetch origin
+            gh pr create -B main -H feature-branch-pr-creation \
             -t 'Merge branch_to_merge into base_branch'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
