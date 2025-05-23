@@ -34,6 +34,7 @@ jobs:
 
       - name: create pull request
         run: gh pr create -B main -H feature-branch-pr-creation \
-              --title 'Release ${{ github.event.inputs.release_type }}' --fill
+              --title "Release ${{ github.event.inputs.release_type }}" \
+              --fill
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
