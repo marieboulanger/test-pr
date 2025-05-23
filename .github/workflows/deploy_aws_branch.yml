@@ -2,6 +2,17 @@ name: PR creation
 
 on:
   workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type:'
+        required: true
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+          - hotfix
+        default: 'minor'
 
 permissions:
   contents: write #needed
@@ -22,6 +33,8 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create pull request
-        run: gh pr create -B main -H feature-branch-pr-creation --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+        run: gh pr create -B main -H feature-branch-pr-creation 
+              --title 'Release ${{ github.event.inputs.release_type }}' 
+              --fill
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
