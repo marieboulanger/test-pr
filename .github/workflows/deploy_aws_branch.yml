@@ -37,5 +37,6 @@ jobs:
             git fetch origin
             gh pr create -B main -H feature-branch-pr-creation \
             -t 'Merge branch_to_merge into base_branch'
+            --fill
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
