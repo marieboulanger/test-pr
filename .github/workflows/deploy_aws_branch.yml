@@ -33,7 +33,8 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create pull request
-        run: gh pr create -B main -H feature-branch-pr-creation \
+        run: |
+            gh pr create -B main -H feature-branch-pr-creation \
             --title "Release ${{ github.event.inputs.release_type }}" \
             --fill
         env:
